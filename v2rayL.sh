@@ -1,2 +1,2 @@
 #!/usr/bin/bash
-sudo python v2rayL.py
+sudo python /opt/v2rayL/v2rayL.py
