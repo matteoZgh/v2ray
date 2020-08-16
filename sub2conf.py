@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
-# author: Suummmmer
 
 import base64
 import json
 import pickle
 import requests
 from config import conf_template as conf
+
+path = "/etc/v2ray/data"
 
 
 class Sub2Conf(object):
@@ -18,7 +19,7 @@ class Sub2Conf(object):
 
         # 解析后配置
         try:
-            with open("./data", "rb") as f:
+            with open(path, "rb") as f:
                 self.saved_conf = pickle.load(f)
         except:
             self.saved_conf = {
@@ -26,8 +27,6 @@ class Sub2Conf(object):
                 "subs": {}
             }
         
-        self.conf = dict(self.saved_conf['local'], **self.saved_conf['subs'])
-
         '''
         self.conf结构
         {
@@ -36,44 +35,12 @@ class Sub2Conf(object):
 
         配置为解析得到的内容 + 协议
         '''
-
-        # if subs_url:  
-        #     try:
-        #         ret = requests.get(subs_url)
-        #         if ret.status_code != 200:
-        #             return 
-        #         all_subs = base64.b64decode(ret.text + "==").decode().strip().split("\n")
-        #     except Exception as e:
-        #         pass
-
-        #     for sub in all_subs:
-        #         self.origin.append(sub.split("://"))
-
-        #     for ori in self.origin:
-        #         if ori[0] == "vmess":
-        #             self.b642conf("vmess", ori[1])
-        #         elif ori[0] == "ss":
-        #             self.b642conf("ss", ori[1])
-
-        # if conf_url:
-        #     try:
-        #         op = conf_url.split("://")
-        #         if op[0] == "vmess":
-        #             self.b642conf("vmess", op[1])
-        #         elif op[0] == "ss":
-        #             self.b642conf("ss", op[1])
-        #     except:
-        #         pass
- 
-        # with open("./data", "wb") as jf:
-        #     pickle.dump(self.conf, jf)
+        self.conf = dict(self.saved_conf['local'], **self.saved_conf['subs'])
 
 
     def b642conf(self, prot, tp, b64str):
         if prot == "vmess":
             nodes = base64.b64decode(b64str + "==").decode()
-            print(nodes)
-            # ret = eval(base64.b64decode(b64str + "==").decode())
             ret = json.loads(nodes)
             region = ret['ps']
 
@@ -148,7 +115,7 @@ class Sub2Conf(object):
         except:
             self.saved_conf['subs'].pop(region)
 
-        with open("./data", "wb") as jf:
+        with open(path, "wb") as jf:
             pickle.dump(self.saved_conf, jf)
     
 
@@ -177,7 +144,7 @@ class Sub2Conf(object):
 
         self.conf = dict(self.saved_conf['local'], **self.saved_conf['subs'])
 
-        with open("./data", "wb") as jf:
+        with open(path, "wb") as jf:
             pickle.dump(self.saved_conf, jf)
 
 
@@ -196,36 +163,5 @@ class Sub2Conf(object):
 
         self.conf = dict(self.saved_conf['local'], **self.saved_conf['subs'])
 
-        with open("./data", "wb") as jf:
+        with open(path, "wb") as jf:
             pickle.dump(self.saved_conf, jf)
-
-# def b642conf(prot, b64str):
-#         if prot == "vmess":
-#             ret = eval(base64.b64decode(b64str).decode())
-#             region = ret['ps']
-#         elif prot == "ss":
-#             string = b64str.split("#")
-#             tmp = base64.b64decode(string[0]).decode()  # aes-256-cfb:541603466@142.93.50.78:9898
-#             ret = {
-#                 "method": tmp.split(":")[0],
-#                 "port": tmp.split(":")[2],
-#                 "password": tmp.split(":")[1].split("@")[0],
-#                 "address": tmp.split(":")[1].split("@")[1],
-#             }
-#             region = string[1]
-
-#         ret["prot"] = prot
-#         print(ret)
-#         exit()
-#         self.conf[region] = ret
-
-if __name__ == '__main__':
-    # s = Sub2Conf("https://sub.qianglie.xyz/subscribe.php?sid=4594&token=TCDWnwMD0rGg")
-    # print(s.conf)
-
-    # s.setconf("1.0x TW-BGP-A 台湾")
-
-    # t = base64.b64decode("ewoidiI6ICIyIiwKInBzIjogIjIzM3YyLmNvbV8xNDIuOTMuNTAuNzgiLAoiYWRkIjogIjE0Mi45My41MC43OCIsCiJwb3J0IjogIjM5Mzk4IiwKImlkIjogIjc1Y2JmYzI0LTZhNjAtNDBmMC05Yjc2LTUyMTlmNTIwYTJlMCIsCiJhaWQiOiAiMjMzIiwKIm5ldCI6ICJrY3AiLAoidHlwZSI6ICJ1dHAiLAoiaG9zdCI6ICIiLAoicGF0aCI6ICIiLAoidGxzIjogIiIKfQo=").decode().strip()
-    # print(t)
-
-    b642conf("ss","YWVzLTI1Ni1jZmI6NTQxNjAzNDY2QDE0Mi45My41MC43ODo5ODk4#ss")
