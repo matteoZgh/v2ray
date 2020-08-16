@@ -152,7 +152,7 @@ class V2rayL(object):
                     print("成功连接到VPN：{}".format(tmp[int(choice)]))
                     print("\r------------------------------------------")
                     self.current = tmp[int(choice)]
-                    with open("./current", "wb") as jf:
+                    with open(path, "wb") as jf:
                         pickle.dump((self.current, self.url, self.auto), jf)
 
             else:
