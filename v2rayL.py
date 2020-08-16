@@ -72,7 +72,7 @@ class V2rayL(object):
             self.run()
 
         else:
-            print("请输入正确的选项...........")
+            print("请输入正确的选项:")
             self.run()
     
 
@@ -102,7 +102,7 @@ class V2rayL(object):
         elif choice == "0":
             self.run()
         else:
-            print("请输入正确的选项...........")
+            print("请输入正确的选项:")
             self.run()
 
     def status(self):
@@ -138,14 +138,14 @@ class V2rayL(object):
             elif choice in [str(i) for i in range(num)]:
                 self.subs.setconf(tmp[int(choice)])
                 try:
-                    print("\r正在连接................")
+                    print("\r正在连接")
                     output = subprocess.getoutput(["sudo systemctl status v2ray.service"])
                     if "Active: active" in output:
                         subprocess.call(["sudo systemctl restart v2ray.service"], shell=True)
                     else:
                         subprocess.call(["sudo systemctl start v2ray.service"], shell=True)
                 except:
-                    print("连接失败，请尝试更新订阅后再次连接......")
+                    print("连接失败，请尝试更新订阅后再次连接")
                     self.run()
                 else:   
                     sleep(2)
@@ -157,7 +157,7 @@ class V2rayL(object):
 
             else:
                 print("\r------------------------------------------")
-                print("请输入正确的选项...........")
+                print("请输入正确的选项:")
                 self.connect()
 
 
@@ -165,10 +165,10 @@ class V2rayL(object):
         try:
             output = subprocess.getoutput(["sudo systemctl status v2ray.service"])
             if "Active: active" in output:
-                print("\r正在断开连接...............................")
+                print("\r正在断开连接")
                 subprocess.call(["sudo systemctl stop v2ray.service"], shell=True)
                 sleep(2)
-                print("VPN连接已断开...............................")
+                print("VPN连接已断开")
                 print("\r------------------------------------------")
                 self.current = "未连接至VPN"
                 with open(path, "wb") as jf:
@@ -176,13 +176,13 @@ class V2rayL(object):
                 
             else:
                 print("\r------------------------------------------")
-                print("服务未开启，无需断开连接................")
+                print("服务未开启，无需断开连接")
                 print("\r------------------------------------------")
                 self.run()
         except Exception as e:
             print("\r------------------------------------------")
             print(e)
-            print("服务出错，请稍后再试.................")
+            print("服务出错，请稍后再试")
             print("\r------------------------------------------")
 
 
@@ -192,10 +192,10 @@ class V2rayL(object):
         if url == "0":
             self.run()
         else:
-            print("\r正在更新订阅地址............................")
+            print("\r正在更新订阅地址")
             self.subs = Sub2Conf(subs_url=url)
             self.subs.update()
-            print("订阅地址更新完成，VPN已更新.....")
+            print("订阅地址更新完成，VPN已更新")
             print("\r------------------------------------------")
             with open(path, "wb") as jf:
                 pickle.dump((self.current, url, self.auto), jf)
@@ -208,10 +208,10 @@ class V2rayL(object):
         if url == "0":
             self.run()
         else:
-            print("\r正在添加配置...................")
+            print("\r正在添加配置")
             self.subs = Sub2Conf(conf_url=url)
             self.subs.add_conf_by_uri()
-            print("配置添加成功，VPN已更新.....")
+            print("配置添加成功，VPN已更新")
             self.run()
 
     
@@ -245,7 +245,7 @@ class V2rayL(object):
 
             else:
                 print("\r------------------------------------------")
-                print("请输入正确的选项...........")
+                print("请输入正确的选项:")
                 self.delconf()
 
 

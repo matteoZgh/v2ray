@@ -7,6 +7,7 @@ import requests
 from config import conf_template as conf
 
 path = "/etc/v2ray/data"
+config_path = "/etc/v2ray/config.json"
 
 
 class Sub2Conf(object):
@@ -104,7 +105,7 @@ class Sub2Conf(object):
             }
 
         
-        with open("/etc/v2ray/config.json", "w") as f:
+        with open(config_path, "w") as f:
             f.write(json.dumps(conf, indent=4))
 
     
