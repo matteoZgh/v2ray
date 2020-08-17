@@ -30,7 +30,6 @@ class V2rayL(object):
         print("订阅：sub")
         print("状态：sta")
         print("节点：node")
-        print("退出：exit")
         print("帮助：help")
         print("\r------------------------------------------")
 
@@ -63,8 +62,6 @@ class V2rayL(object):
             self.status()
         elif choice == "node":
             self.print_nodes()
-        elif choice == "exit":
-            exit()
         elif choice == "help":
             self.help()
         else:
